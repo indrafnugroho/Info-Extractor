@@ -1,59 +1,58 @@
-# Python program for KMP Algorithm 
-def KMPSearch(pat, txt): 
-	M = len(pat) 
-	N = len(txt) 
+# 13518016
+# Indra Febrio Nugroho
+# Knuth-Morris-Pratt Algorithm
 
-	# create lps[] that will hold the longest prefix suffix 
-	# values for pattern 
-	lps = [0]*M 
-	j = 0 # index for pat[] 
+def KMPMatch(pattern, text): 
+	m = len(pattern) 
+	n = len(text) 
 
-	# Preprocess the pattern (calculate lps[] array) 
-	computeLPSArray(pat, M, lps) 
+	# create container that will hold the longest prefix suffix values for pattern 
+	lps = [0 for i in range(m)]
+	# calculate the lps
+	calculateLPS(pattern, lps) 
 
-	i = 0 # index for txt[] 
-	while i < N: 
-		if pat[j] == txt[i]: 
+	total = 0 # total matched pattern in the text
+	matchedIdx = [] # container for index of matched pattern in the text
+	i = 0 # index for text
+	j = 0 # index for pattern 
+	while i < n: 
+		if (pattern[j] == text[i]): 
 			i += 1
 			j += 1
-
-		if j == M: 
-			print ("Found pattern at index " + str(i-j))
-			j = lps[j-1] 
-
-		# mismatch after j matches 
-		elif i < N and pat[j] != txt[i]: 
-			# Do not match lps[0..lps[j-1]] characters, 
-			# they will match anyway 
-			if j != 0: 
+			if (j == m): 
+				matchedIdx.append(i-j)
+				total += 1
 				j = lps[j-1] 
-			else: 
-				i += 1
-
-def computeLPSArray(pat, M, lps): 
-	len = 0 # length of the previous longest prefix suffix 
-
-	lps[0] # lps[0] is always 0 
-	i = 1
-
-	# the loop calculates lps[i] for i = 1 to M-1 
-	while i < M: 
-		if pat[i]== pat[len]: 
-			len += 1
-			lps[i] = len
-			i += 1
+		elif (j > 0): 
+			j = lps[j-1] 
 		else: 
-			# This is tricky. Consider the example. 
-			# AAACAAAA and i = 7. The idea is similar 
-			# to search step. 
-			if len != 0: 
-				len = lps[len-1] 
+			i += 1
 
-				# Also, note that we do not increment i here 
-			else: 
-				lps[i] = 0
-				i += 1
+	if (total > 0) :
+		print("Total matched pattern in the text: ", str(total))
+		print("Matched at index: ", end="")
+		print(matchedIdx)
+	else:
+		print("Pattern not found")
 
-txt = "ABABDABACDABABCABAB"
-pat = "ABABCABAB"
-KMPSearch(pat, txt)
+
+def calculateLPS(pattern, lps): 
+	m = len(pattern)
+
+	i = 1
+	j = 0 # length of the previous longest prefix suffix 
+
+	while (i < m): 
+		if (pattern[i]== pattern[j]): 
+			lps[i] = j + 1
+			i += 1
+			j += 1
+		elif (j > 0): 
+			j = lps[j-1] 
+		else: 
+			lps[i] = 0
+			i += 1
+
+text = "ABABDABACDABABCABAB"
+pattern = "ABABCABAB"
+KMPMatch(pattern, text)
