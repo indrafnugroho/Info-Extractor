@@ -1,77 +1,58 @@
-# Python3 Program for Bad Character Heuristic 
-# of Boyer Moore String Matching Algorithm 
+# 13518016
+# Indra Febrio Nugroho
+# Boyer Moore Algorithm
 
-NO_OF_CHARS = 256
+def buildLastOccurence(pattern): 
+	# length of pattern
+	m = len(pattern)
+	# Init all occurrence as -1 
+	lastOcc = [-1 for i in range(128)] 
 
-def badCharHeuristic(string, size): 
-	''' 
-	The preprocessing function for 
-	Boyer Moore's bad character heuristic 
-	'''
+	# Fill the value of last occurrence to the array
+	for i in range(m): 
+		lastOcc[ord(pattern[i])] = i; 
 
-	# Initialize all occurrence as -1 
-	badChar = [-1]*NO_OF_CHARS 
+	return lastOcc 
 
-	# Fill the actual value of last occurrence 
-	for i in range(size): 
-		badChar[ord(string[i])] = i; 
+def BMMatch(text, pattern): 
+	m = len(pattern) 
+	n = len(text) 
+	
+	i = m - 1
+	total = 0 # total matched pattern in the text
+	matchedIdx = []
 
-	# retun initialized list 
-	return badChar 
+	lastOcc = buildLastOccurence(pattern) 
 
-def search(txt, pat): 
-	''' 
-	A pattern searching function that uses Bad Character 
-	Heuristic of Boyer Moore Algorithm 
-	'''
-	m = len(pat) 
-	n = len(txt) 
+	if (i > n - 1) :
+		print("Pattern not found")
+	else :
+		j = m - 1
+		while (i <= n - 1):
+			if (pattern[j] == text[i]):
+				i -= 1
+				j -= 1
+				if (j == -1) :
+					total += 1
+					matchedIdx.append(i+1)
+					j = m - 1
+					i += 2*m
+			else :
+				lo = lastOcc[ord(text[i])]
+				i += m - min(j, 1+lo)
+				j = m - 1
 
-	# create the bad character list by calling 
-	# the preprocessing function badCharHeuristic() 
-	# for given pattern 
-	badChar = badCharHeuristic(pat, m) 
+	if (total == 0):
+		print("Pattern not found")
+	else :
+		print("Total mathed pattern in the text: ", str(total))
+		print("Matched at index: ", end="")
+		print(matchedIdx)
+	
 
-	# s is shift of the pattern with respect to text 
-	s = 0
-	while(s <= n-m): 
-		j = m-1
-
-		# Keep reducing index j of pattern while 
-		# characters of pattern and text are matching 
-		# at this shift s 
-		while j>=0 and pat[j] == txt[s+j]: 
-			j -= 1
-
-		# If the pattern is present at current shift, 
-		# then index j will become -1 after the above loop 
-		if j<0: 
-			print("Pattern occur at shift = {}".format(s)) 
-
-			'''	 
-				Shift the pattern so that the next character in text 
-					aligns with the last occurrence of it in pattern. 
-				The condition s+m < n is necessary for the case when 
-				pattern occurs at the end of text 
-			'''
-			s += (m-badChar[ord(txt[s+m])] if s+m<n else 1) 
-		else: 
-			''' 
-			Shift the pattern so that the bad character in text 
-			aligns with the last occurrence of it in pattern. The 
-			max function is used to make sure that we get a positive 
-			shift. We may get a negative shift if the last occurrence 
-			of bad character in pattern is on the right side of the 
-			current character. 
-			'''
-			s += max(1, j-badChar[ord(txt[s+j])]) 
-
-
-# Driver program to test above function 
 def main(): 
 	txt = "ABAAABCD"
-	pat = "ABC"
-	search(txt, pat) 
+	pat = "AX"
+	BMMatch(txt, pat) 
 
-if __name__ == '__main__': 
-	main()
+main()
