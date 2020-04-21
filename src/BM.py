@@ -25,7 +25,8 @@ def BMMatch(text, pattern):
 	lastOcc = buildLastOccurence(pattern) 
 
 	if (i > n - 1) :
-		print("Pattern not found")
+		# print("Pattern not found")
+		return (-1)
 	else :
 		j = m - 1
 		while (i <= n - 1):
@@ -33,6 +34,7 @@ def BMMatch(text, pattern):
 				i -= 1
 				j -= 1
 				if (j == -1) :
+					return (i+1)
 					total += 1
 					matchedIdx.append(i+1)
 					j = m - 1
@@ -43,11 +45,12 @@ def BMMatch(text, pattern):
 				j = m - 1
 
 	if (total == 0):
-		print("Pattern not found")
-	else :
-		print("Total mathed pattern in the text: ", str(total))
-		print("Matched at index: ", end="")
-		print(matchedIdx)
+		# print("Pattern not found")
+		return (-1)
+	# else :
+		# print("Total mathed pattern in the text: ", str(total))
+		# print("Matched at index: ", end="")
+		# print(matchedIdx)
 	
 
 def main(): 

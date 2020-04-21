@@ -2,7 +2,7 @@
 # Indra Febrio Nugroho
 # Knuth-Morris-Pratt Algorithm
 
-def KMPMatch(pattern, text): 
+def KMPMatch(text, pattern): 
 	m = len(pattern) 
 	n = len(text) 
 
@@ -20,6 +20,7 @@ def KMPMatch(pattern, text):
 			i += 1
 			j += 1
 			if (j == m): 
+				return (i-j)
 				matchedIdx.append(i-j)
 				total += 1
 				j = lps[j-1] 
@@ -28,12 +29,13 @@ def KMPMatch(pattern, text):
 		else: 
 			i += 1
 
-	if (total > 0) :
-		print("Total matched pattern in the text: ", str(total))
-		print("Matched at index: ", end="")
-		print(matchedIdx)
-	else:
-		print("Pattern not found")
+	# if (total > 0) :
+		# print("Total matched pattern in the text: ", str(total))
+		# print("Matched at index: ", end="")
+		# print(matchedIdx)
+	if (total == 0):
+		# print("Pattern not found")
+		return (-1)
 
 
 def calculateLPS(pattern, lps): 
@@ -55,4 +57,4 @@ def calculateLPS(pattern, lps):
 
 text = "ABABDABACDABABCABAB"
 pattern = "ABABCABAB"
-KMPMatch(pattern, text)
+KMPMatch(text, pattern)
