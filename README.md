@@ -1,5 +1,7 @@
 # Info-Extraction
-Implementing KMP, BM, and Regex to extract information from text. Made in Python for ITB IF2211 Course
+Implementing KMP, BM, and Regex to extract information from text. 
+
+Made in Python for ITB IF2211 Course
 
 ## Prerequisites
 Things below are required to be installed in your computer before you proceed and run this program
@@ -26,21 +28,21 @@ Open your terminal and type these in
 
 `pip install nltk`
 
-After that, open python3 on your local computer then follow these instructions
+After that, open python3 on your local computer then type these instructions in
 
 `import nltk`
 
 `nltk.download()`
 
 A new windows should be opened by now, after that follow these instructions
-1. Go to module tab
+1. Go to _module_ tab
 2. Find and choose `punkt` module
-3. Press download button
+3. Press _download_ button
 
 Now you're ready to run the program!
 
 ## Running the Program
-1. Go to the src directory
+1. Go to the _src_ directory
 2. Open terminal there
 3. Type in `python App.py`
 
