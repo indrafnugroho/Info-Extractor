@@ -21,20 +21,13 @@ def KMPMatch(text, pattern):
 			j += 1
 			if (j == m): 
 				return (i-j)
-				matchedIdx.append(i-j)
-				total += 1
-				j = lps[j-1] 
+
 		elif (j > 0): 
 			j = lps[j-1] 
 		else: 
 			i += 1
 
-	# if (total > 0) :
-		# print("Total matched pattern in the text: ", str(total))
-		# print("Matched at index: ", end="")
-		# print(matchedIdx)
 	if (total == 0):
-		# print("Pattern not found")
 		return (-1)
 
 
@@ -54,7 +47,3 @@ def calculateLPS(pattern, lps):
 		else: 
 			lps[i] = 0
 			i += 1
-
-text = "ABABDABACDABABCABAB"
-pattern = "ABABCABAB"
-KMPMatch(text, pattern)

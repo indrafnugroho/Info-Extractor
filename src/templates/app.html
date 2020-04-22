@@ -1,12 +1,39 @@
 {% extends "layout.html" %}
 {% block body %}
-<div class="block1">
+<!DOCTYPE html>
 <h1>My InfoExtraction App</h1>
 
-<form method="POST" enctype="multipart/form-data" action="#">
-	<p>Files:</p>
-	<p><input type="file" name="file" multiple=""></p>
-	<p><input type="submit" value="Next"></p>
+<form name="allForm" class="form-inline" method="POST" action="/" onsubmit="/" enctype="multipart/form-data">
+  <div class="form-group">
+    <div class="input-group">
+		<p>Files:</p>
+		<p><input type="file" name="file[]" multiple=""></p>
+		<p>Keyword:</p>
+		<p><input type="text" name="kw" /></p>       
+        <span class="input-group-addon">Algorithm:</span>
+            <select name="algo" class="selectpicker form-control">
+              	<option value="kmp">Knuth-Morris-Pratt</option>
+  				<option value="bm">Boyer Moore</option>
+  				<option value="regex">Regex</option>
+            </select>
+    </div>
+    <button type="submit" class="btn btn-default">Show</button>
+  </div>
 </form>
-</div>
+
+<p>Search Result</p>
+
+<p>Keyword: {{keyword}}</p>
+<p>Result of Extracted Information:</p>
+
+<ol> 
+{%for i in range(0, length)%} 
+    <p>Total: {{total[i]}}; Time: {{time[i]}}</p>
+    <p>{{words[i]}} ({{files[i]}})</p>
+    <br>
+{%endfor%} 
+  
+</ol> 
+
+
 {% endblock %}

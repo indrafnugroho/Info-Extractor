@@ -2,18 +2,6 @@
 # Indra Febrio Nugroho
 # Boyer Moore Algorithm
 
-def buildLastOccurence(pattern): 
-	# length of pattern
-	m = len(pattern)
-	# Init all occurrence as -1 
-	lastOcc = [-1 for i in range(128)] 
-
-	# Fill the value of last occurrence to the array
-	for i in range(m): 
-		lastOcc[ord(pattern[i])] = i; 
-
-	return lastOcc 
-
 def BMMatch(text, pattern): 
 	m = len(pattern) 
 	n = len(text) 
@@ -25,7 +13,6 @@ def BMMatch(text, pattern):
 	lastOcc = buildLastOccurence(pattern) 
 
 	if (i > n - 1) :
-		# print("Pattern not found")
 		return (-1)
 	else :
 		j = m - 1
@@ -35,27 +22,31 @@ def BMMatch(text, pattern):
 				j -= 1
 				if (j == -1) :
 					return (i+1)
-					total += 1
-					matchedIdx.append(i+1)
-					j = m - 1
-					i += 2*m
+					
 			else :
 				lo = lastOcc[ord(text[i])]
 				i += m - min(j, 1+lo)
 				j = m - 1
 
 	if (total == 0):
-		# print("Pattern not found")
 		return (-1)
-	# else :
-		# print("Total mathed pattern in the text: ", str(total))
-		# print("Matched at index: ", end="")
-		# print(matchedIdx)
-	
+
+def buildLastOccurence(pattern): 
+	# length of pattern
+	m = len(pattern)
+	# Init all occurrence as -1 
+	lastOcc = [-1 for i in range(256)] 
+
+	# Fill the value of last occurrence to the array
+	for i in range(m): 
+		lastOcc[ord(pattern[i])] = i; 
+
+	return lastOcc 
 
 def main(): 
 	txt = "ABAAABCD"
 	pat = "AX"
 	BMMatch(txt, pat) 
 
-main()
+if __name__ == "__main__" :
+	main()
